@@ -1,0 +1,4 @@
+websites:
+  - name: Example Organization
+    url: https://example.org/careers
+    parser: example_parser
