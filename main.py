@@ -1,8 +1,49 @@
 from fastapi import FastAPI
-from backend.app import app as backend_app
+
+from database.connection import get_connection, close_connection
+from database.schema import create_schema
 
 app = FastAPI()
 
+
 @app.get("/")
 async def root():
-    return {"message": "ClimateJobsPortal is running"}
+    """Health check endpoint."""
+    return {
+        "message": "ClimateJobsPortal is running"
+    }
+
+
+@app.get("/test-db")
+async def test_database():
+    """Test SQLite database connection."""
+
+    connection = get_connection()
+
+    version = connection.execute(
+        "SELECT sqlite_version();"
+    ).fetchone()[0]
+
+    close_connection(connection)
+
+    return {
+        "status": "success",
+        "database": "Connected",
+        "sqlite_version": version
+    }
+
+
+@app.get("/initialize-db")
+async def initialize_database():
+    """Create all database tables and indexes."""
+
+    connection = get_connection()
+
+    create_schema(connection)
+
+    close_connection(connection)
+
+    return {
+        "status": "success",
+        "message": "Database schema initialized successfully"
+    }
