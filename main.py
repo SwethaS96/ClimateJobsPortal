@@ -3,8 +3,10 @@ from fastapi import FastAPI
 from database.connection import get_connection, close_connection
 from database.schema import create_schema
 from routers.organizations import router as organizations_router
-from routers.websites import router as websites_router
 from routers.notifications import router as notifications_router
+from routers.pdf_documents import router as pdf_documents_router
+from routers.websites import router as websites_router
+from routers.pdf_documents import router as pdf_documents_router
 
 
 app = FastAPI()
@@ -14,6 +16,8 @@ app.include_router(organizations_router)
 app.include_router(websites_router)
 
 app.include_router(notifications_router)
+
+app.include_router(pdf_documents_router)
 
 @app.get("/")
 async def root():
