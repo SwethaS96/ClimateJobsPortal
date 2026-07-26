@@ -2,8 +2,11 @@ from fastapi import FastAPI
 
 from database.connection import get_connection, close_connection
 from database.schema import create_schema
+from routers.organizations import router as organizations_router
 
 app = FastAPI()
+
+app.include_router(organizations_router)
 
 
 @app.get("/")
