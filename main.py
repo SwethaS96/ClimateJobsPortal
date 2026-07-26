@@ -3,11 +3,14 @@ from fastapi import FastAPI
 from database.connection import get_connection, close_connection
 from database.schema import create_schema
 from routers.organizations import router as organizations_router
+from routers.websites import router as websites_router
+
 
 app = FastAPI()
 
 app.include_router(organizations_router)
 
+app.include_router(websites_router)
 
 @app.get("/")
 async def root():
