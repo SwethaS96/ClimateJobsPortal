@@ -47,7 +47,7 @@ def test_load_enabled_websites_one_enabled_website():
             user_agent="CustomAgent/1.0",
             timeout_seconds=45,
             scrape_interval_minutes=120,
-            scrape_frequency=None,
+            
         )
 
         loader = SiteConfigLoader()
@@ -84,7 +84,7 @@ def test_load_enabled_websites_multiple_enabled_websites():
             user_agent=None,
             timeout_seconds=30,
             scrape_interval_minutes=60,
-            scrape_frequency=None,
+            
         )
         insert_website(
             organization_id=org_id_a,
@@ -95,7 +95,7 @@ def test_load_enabled_websites_multiple_enabled_websites():
             user_agent="Agent/2.0",
             timeout_seconds=15,
             scrape_interval_minutes=30,
-            scrape_frequency=None,
+            
         )
 
         loader = SiteConfigLoader()
@@ -125,7 +125,7 @@ def test_load_enabled_websites_ignores_disabled_websites():
             user_agent=None,
             timeout_seconds=30,
             scrape_interval_minutes=60,
-            scrape_frequency=None,
+            
         )
         disabled_id = insert_website(
             organization_id=org_id,
@@ -136,7 +136,7 @@ def test_load_enabled_websites_ignores_disabled_websites():
             user_agent=None,
             timeout_seconds=30,
             scrape_interval_minutes=60,
-            scrape_frequency=None,
+            
         )
 
         soft_delete_website(disabled_id)
