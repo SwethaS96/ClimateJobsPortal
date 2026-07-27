@@ -20,7 +20,10 @@ def insert_website(
     page_name: str,
     url: str,
     parser_name: str | None = None,
-    scrape_frequency: str | None = None,
+    parser_metadata: str | None = None,
+    user_agent: str | None = None,
+    timeout_seconds: int | None = None,
+    scrape_interval_minutes: int | None = None,
 ) -> int:
     """Insert a new website and return its id."""
     conn = get_connection()
@@ -30,11 +33,25 @@ def insert_website(
         cur.execute(
             """
             INSERT INTO websites
-                (organization_id, page_name, url, parser_name, scrape_frequency, is_enabled, created_at, updated_at)
+                (organization_id, page_name, url, parser_name, parser_metadata,
+                 user_agent, timeout_seconds, scrape_interval_minutes,
+                 is_enabled, created_at, updated_at)
             VALUES
-                (?, ?, ?, ?, ?, ?, ?, ?)
+                (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
-            (organization_id, page_name, url, parser_name, scrape_frequency, 1, ts, ts),
+            (
+                organization_id,
+                page_name,
+                url,
+                parser_name,
+                parser_metadata,
+                user_agent,
+                timeout_seconds,
+                scrape_interval_minutes,
+                1,
+                ts,
+                ts,
+            ),
         )
         conn.commit()
         return int(cur.lastrowid)
@@ -48,7 +65,13 @@ def get_website_by_id(website_id: int) -> Optional[sqlite3.Row]:
     try:
         cur = conn.cursor()
         cur.execute(
-            "SELECT * FROM websites WHERE id = ? AND is_enabled = 1",
+            """
+            SELECT id, organization_id, page_name, url, parser_name, parser_metadata,
+                   user_agent, timeout_seconds, scrape_interval_minutes, is_enabled,
+                   last_scraped, created_at, updated_at
+            FROM websites
+            WHERE id = ? AND is_enabled = 1
+            """,
             (website_id,),
         )
         return cur.fetchone()
@@ -62,7 +85,14 @@ def get_all_websites() -> List[sqlite3.Row]:
     try:
         cur = conn.cursor()
         cur.execute(
-            "SELECT * FROM websites WHERE is_enabled = 1 ORDER BY organization_id ASC, page_name COLLATE NOCASE ASC"
+            """
+            SELECT id, organization_id, page_name, url, parser_name, parser_metadata,
+                   user_agent, timeout_seconds, scrape_interval_minutes, is_enabled,
+                   last_scraped, created_at, updated_at
+            FROM websites
+            WHERE is_enabled = 1
+            ORDER BY organization_id ASC, page_name COLLATE NOCASE ASC
+            """
         )
         return list(cur.fetchall())
     finally:
@@ -75,7 +105,14 @@ def get_websites_by_organization(organization_id: int) -> List[sqlite3.Row]:
     try:
         cur = conn.cursor()
         cur.execute(
-            "SELECT * FROM websites WHERE organization_id = ? AND is_enabled = 1 ORDER BY page_name COLLATE NOCASE ASC",
+            """
+            SELECT id, organization_id, page_name, url, parser_name, parser_metadata,
+                   user_agent, timeout_seconds, scrape_interval_minutes, is_enabled,
+                   last_scraped, created_at, updated_at
+            FROM websites
+            WHERE organization_id = ? AND is_enabled = 1
+            ORDER BY page_name COLLATE NOCASE ASC
+            """,
             (organization_id,),
         )
         return list(cur.fetchall())
@@ -88,7 +125,10 @@ def update_website(
     page_name: str | None = None,
     url: str | None = None,
     parser_name: str | None = None,
-    scrape_frequency: str | None = None,
+    parser_metadata: str | None = None,
+    user_agent: str | None = None,
+    timeout_seconds: int | None = None,
+    scrape_interval_minutes: int | None = None,
     is_enabled: bool | None = None,
 ) -> bool:
     """Update an enabled website. Returns True if one row was updated."""
@@ -104,9 +144,18 @@ def update_website(
     if parser_name is not None:
         fields.append("parser_name = ?")
         values.append(parser_name)
-    if scrape_frequency is not None:
-        fields.append("scrape_frequency = ?")
-        values.append(scrape_frequency)
+    if parser_metadata is not None:
+        fields.append("parser_metadata = ?")
+        values.append(parser_metadata)
+    if user_agent is not None:
+        fields.append("user_agent = ?")
+        values.append(user_agent)
+    if timeout_seconds is not None:
+        fields.append("timeout_seconds = ?")
+        values.append(timeout_seconds)
+    if scrape_interval_minutes is not None:
+        fields.append("scrape_interval_minutes = ?")
+        values.append(scrape_interval_minutes)
     if is_enabled is not None:
         fields.append("is_enabled = ?")
         values.append(1 if is_enabled else 0)

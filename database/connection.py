@@ -28,3 +28,5 @@ def get_connection() -> Connection:
 def close_connection(connection: Connection) -> None:
     """Close the provided SQLite connection."""
     connection.close()
+from pathlib import Path
+

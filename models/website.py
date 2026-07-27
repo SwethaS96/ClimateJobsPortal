@@ -11,7 +11,10 @@ class WebsiteCreate(BaseModel):
     page_name: str
     url: str
     parser_name: Optional[str] = None
-    scrape_frequency: Optional[str] = None
+    parser_metadata: Optional[str] = None
+    user_agent: Optional[str] = None
+    timeout_seconds: Optional[int] = None
+    scrape_interval_minutes: Optional[int] = None
 
 
 class WebsiteUpdate(BaseModel):
@@ -20,8 +23,12 @@ class WebsiteUpdate(BaseModel):
     page_name: Optional[str] = None
     url: Optional[str] = None
     parser_name: Optional[str] = None
-    scrape_frequency: Optional[str] = None
+    parser_metadata: Optional[str] = None
+    user_agent: Optional[str] = None
+    timeout_seconds: Optional[int] = None
+    scrape_interval_minutes: Optional[int] = None
     is_enabled: Optional[bool] = None
+    
 
 
 class WebsiteResponse(BaseModel):
@@ -32,7 +39,10 @@ class WebsiteResponse(BaseModel):
     page_name: str
     url: str
     parser_name: Optional[str] = None
-    scrape_frequency: Optional[str] = None
+    parser_metadata: Optional[str] = None
+    user_agent: Optional[str] = None
+    timeout_seconds: Optional[int] = None
+    scrape_interval_minutes: Optional[int] = None
     is_enabled: bool
     last_scraped: Optional[str] = None
     created_at: str

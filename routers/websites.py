@@ -39,7 +39,10 @@ def create_website(payload: WebsiteCreate) -> WebsiteResponse:
         payload.page_name,
         payload.url,
         payload.parser_name,
-        payload.scrape_frequency,
+        payload.parser_metadata,
+        payload.user_agent,
+        payload.timeout_seconds,
+        payload.scrape_interval_minutes,
     )
     row = get_website_by_id(website_id)
     if row is None:
@@ -78,7 +81,10 @@ def put_website(website_id: int, payload: WebsiteUpdate) -> WebsiteResponse:
         payload.page_name,
         payload.url,
         payload.parser_name,
-        payload.scrape_frequency,
+        payload.parser_metadata,
+        payload.user_agent,
+        payload.timeout_seconds,
+        payload.scrape_interval_minutes,
         payload.is_enabled,
     )
     if not updated:

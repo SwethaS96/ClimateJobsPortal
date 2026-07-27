@@ -21,13 +21,16 @@ CREATE TABLE IF NOT EXISTS websites (
   organization_id INTEGER NOT NULL,
   page_name TEXT NOT NULL,
   url TEXT NOT NULL UNIQUE,
-  parser_name TEXT,
-  scrape_frequency TEXT,
+  parser_name TEXT NOT NULL DEFAULT 'generic_html',
+  parser_metadata TEXT,
+  user_agent TEXT,
+  timeout_seconds INTEGER NOT NULL DEFAULT 30,
+  scrape_interval_minutes INTEGER NOT NULL DEFAULT 60,
   is_enabled INTEGER NOT NULL DEFAULT 1,
   last_scraped TEXT,
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL,
-  FOREIGN KEY (organization_id) REFERENCES organizations (id)
+  FOREIGN KEY (organization_id) REFERENCES organizations (id) ON DELETE CASCADE
 );
 '''
 
@@ -48,8 +51,8 @@ CREATE TABLE IF NOT EXISTS notifications (
   last_seen TEXT NOT NULL,
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL,
-  FOREIGN KEY (organization_id) REFERENCES organizations (id),
-  FOREIGN KEY (website_id) REFERENCES websites (id)
+  FOREIGN KEY (organization_id) REFERENCES organizations (id) ON DELETE CASCADE,
+  FOREIGN KEY (website_id) REFERENCES websites (id) ON DELETE CASCADE
 );
 '''
 
@@ -64,7 +67,7 @@ CREATE TABLE IF NOT EXISTS pdf_documents (
   downloaded INTEGER NOT NULL DEFAULT 0,
   downloaded_at TEXT,
   file_size INTEGER,
-  FOREIGN KEY (notification_id) REFERENCES notifications (id)
+  FOREIGN KEY (notification_id) REFERENCES notifications (id) ON DELETE CASCADE
 );
 '''
 
@@ -80,7 +83,7 @@ CREATE TABLE IF NOT EXISTS scrape_history (
   notifications_added INTEGER DEFAULT 0,
   notifications_updated INTEGER DEFAULT 0,
   error_message TEXT,
-  FOREIGN KEY (website_id) REFERENCES websites (id)
+  FOREIGN KEY (website_id) REFERENCES websites (id) ON DELETE CASCADE
 );
 '''
 
@@ -112,8 +115,16 @@ CREATE_NOTIFICATIONS_ORGANIZATION_INDEX = '''
 CREATE INDEX IF NOT EXISTS idx_notifications_organization_id ON notifications (organization_id);
 '''
 
+CREATE_NOTIFICATIONS_WEBSITE_INDEX = '''
+CREATE INDEX IF NOT EXISTS idx_notifications_website_id ON notifications (website_id);
+'''
+
 CREATE_WEBSITES_ORGANIZATION_INDEX = '''
 CREATE INDEX IF NOT EXISTS idx_websites_organization_id ON websites (organization_id);
+'''
+
+CREATE_WEBSITES_ENABLED_INDEX = '''
+CREATE INDEX IF NOT EXISTS idx_websites_enabled ON websites (is_enabled);
 '''
 
 CREATE_SCRAPE_HISTORY_WEBSITE_INDEX = '''
@@ -129,7 +140,9 @@ INDEXES = [
     CREATE_NOTIFICATIONS_STATUS_INDEX,
     CREATE_NOTIFICATIONS_DEADLINE_INDEX,
     CREATE_NOTIFICATIONS_ORGANIZATION_INDEX,
+    CREATE_NOTIFICATIONS_WEBSITE_INDEX,
     CREATE_WEBSITES_ORGANIZATION_INDEX,
+    CREATE_WEBSITES_ENABLED_INDEX,
     CREATE_SCRAPE_HISTORY_WEBSITE_INDEX,
     CREATE_PDF_NOTIFICATION_INDEX,
 ]
