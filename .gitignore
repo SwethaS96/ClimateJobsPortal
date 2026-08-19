@@ -20,10 +20,20 @@ ENV/
 .idea/
 *.swp
 
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
 # Logs and data
 logs/
 *.log
 
-# SQLite
+# SQLite — the production database is the persistent state committed by
+# the weekly GitHub Actions workflow; every other .db/.sqlite3 file
+# (temp test databases, local backups) stays ignored.
 *.sqlite3
 *.db
+!data/database/climate_jobs.db
+data/database/backups/
+data/validation_audit

@@ -5,7 +5,14 @@ from __future__ import annotations
 from typing import Type
 
 from parser.base_parser import BaseParser
+from parser.csir import CSIRParser
 from parser.exceptions import ParserRegistrationError, ParserNotFoundError
+from parser.generic_html import GenericHTMLParser
+from parser.iitm import IITMParser
+from parser.imd import IMDParser
+from parser.niot import NIOTParser
+
+DEFAULT_PARSER_NAME = "generic_html"
 
 
 class ParserRegistry:
@@ -49,6 +56,34 @@ class ParserRegistry:
             raise ParserNotFoundError(f"Parser '{name}' not found")
         return parser_class
 
+    def get_or_default(self, name: str) -> Type[BaseParser]:
+        """Retrieve a parser class by name, falling back to `GenericHTMLParser`.
+
+        Unlike `get`, this never raises `ParserNotFoundError`: an unknown
+        or missing parser name silently resolves to the generic fallback
+        parser so that scraping never crashes because of an unrecognized
+        site-specific parser name.
+
+        Args:
+            name: The parser name to lookup.
+
+        Returns:
+            The registered parser class, or `GenericHTMLParser` if `name`
+            is unknown.
+        """
+        try:
+            return self.get(name)
+        except ParserNotFoundError:
+            return self._parsers.get(DEFAULT_PARSER_NAME, GenericHTMLParser)
+
     def list_parsers(self) -> list[str]:
         """Return all registered parser names."""
         return sorted(self._parsers.keys())
+
+    def register_builtin_parsers(self) -> None:
+        """Register built-in parser classes available for YAML-driven onboarding."""
+        self.register("generic_html", GenericHTMLParser)
+        self.register("iitm", IITMParser)
+        self.register("imd", IMDParser)
+        self.register("niot", NIOTParser)
+        self.register("csir", CSIRParser)

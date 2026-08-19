@@ -1,0 +1,11 @@
+organization: Example Organization
+url: https://example.org/careers
+parser: generic_html
+selectors:
+  listing: a.job-link
+  title: h2
+  link: href
+rate_limit:
+  requests_per_minute: 60
+schedule:
+  interval_minutes: 60

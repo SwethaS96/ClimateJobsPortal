@@ -68,6 +68,39 @@ def insert_notification(
         close_connection(conn)
 
 
+def get_notification_by_hash(hash_value: str) -> Optional[sqlite3.Row]:
+    """Return a single active notification matching `hash_value`, or None."""
+    conn = get_connection()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "SELECT * FROM notifications WHERE hash = ? AND status = 'ACTIVE'",
+            (hash_value,),
+        )
+        return cur.fetchone()
+    finally:
+        close_connection(conn)
+
+
+def touch_last_seen(notification_id: int) -> bool:
+    """Update `last_seen` (and `updated_at`) for an active notification to now.
+
+    Returns True if a row was updated.
+    """
+    conn = get_connection()
+    try:
+        cur = conn.cursor()
+        ts = _utc_iso_timestamp()
+        cur.execute(
+            "UPDATE notifications SET last_seen = ?, updated_at = ? WHERE id = ? AND status = 'ACTIVE'",
+            (ts, ts, notification_id),
+        )
+        conn.commit()
+        return cur.rowcount == 1
+    finally:
+        close_connection(conn)
+
+
 def get_notification_by_id(notification_id: int) -> Optional[sqlite3.Row]:
     """Return a single active notification by id or None if not found."""
     conn = get_connection()
@@ -89,6 +122,34 @@ def get_all_notifications() -> List[sqlite3.Row]:
         cur = conn.cursor()
         cur.execute(
             "SELECT * FROM notifications WHERE status = 'ACTIVE' ORDER BY notification_date DESC"
+        )
+        return list(cur.fetchall())
+    finally:
+        close_connection(conn)
+
+
+def get_unsent_notifications() -> List[sqlite3.Row]:
+    """Return all active, not-yet-emailed notifications, joined with their
+    organization name and first linked PDF url (if any). Read-only —
+    used by the email digest and by read-only audit tooling.
+    """
+    conn = get_connection()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            SELECT n.id, n.organization_id, o.name AS organization_name, n.title,
+                   n.page_url, n.first_seen, n.application_deadline, n.category,
+                   (
+                       SELECT p.pdf_url FROM pdf_documents p
+                       WHERE p.notification_id = n.id
+                       ORDER BY p.id LIMIT 1
+                   ) AS pdf_url
+            FROM notifications n
+            JOIN organizations o ON o.id = n.organization_id
+            WHERE n.status = 'ACTIVE' AND n.email_sent = 0
+            ORDER BY o.name COLLATE NOCASE ASC, n.id ASC
+            """
         )
         return list(cur.fetchall())
     finally:

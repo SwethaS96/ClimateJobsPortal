@@ -24,6 +24,9 @@ def insert_pdf_document(
     downloaded: bool | None = False,
     downloaded_at: str | None = None,
     file_size: int | None = None,
+    http_status: int | None = None,
+    extracted_text: str | None = None,
+    extraction_status: str | None = None,
 ) -> int:
     """Insert a new PDF document and return its id."""
     conn = get_connection()
@@ -33,9 +36,9 @@ def insert_pdf_document(
             """
             INSERT INTO pdf_documents
                 (notification_id, document_type, pdf_url, local_file, checksum,
-                 downloaded, downloaded_at, file_size)
+                 downloaded, downloaded_at, file_size, http_status, extracted_text, extraction_status)
             VALUES
-                (?, ?, ?, ?, ?, ?, ?, ?)
+                (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 notification_id,
@@ -46,6 +49,9 @@ def insert_pdf_document(
                 1 if downloaded else 0,
                 downloaded_at,
                 file_size,
+                http_status,
+                extracted_text,
+                extraction_status,
             ),
         )
         conn.commit()
@@ -104,6 +110,9 @@ def update_pdf_document(
     downloaded: bool | None = None,
     downloaded_at: str | None = None,
     file_size: int | None = None,
+    http_status: int | None = None,
+    extracted_text: str | None = None,
+    extraction_status: str | None = None,
 ) -> bool:
     """Update a PDF document. Returns True if one row was updated."""
     fields: List[str] = []
@@ -130,6 +139,15 @@ def update_pdf_document(
     if file_size is not None:
         fields.append("file_size = ?")
         values.append(file_size)
+    if http_status is not None:
+        fields.append("http_status = ?")
+        values.append(http_status)
+    if extracted_text is not None:
+        fields.append("extracted_text = ?")
+        values.append(extracted_text)
+    if extraction_status is not None:
+        fields.append("extraction_status = ?")
+        values.append(extraction_status)
 
     if not fields:
         return False

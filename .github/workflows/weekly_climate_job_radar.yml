@@ -1,0 +1,106 @@
+name: Weekly Climate Job Radar
+
+# GitHub Actions' `schedule.cron` is always evaluated in UTC — there is no
+# native per-workflow timezone setting for it. India (IST, UTC+5:30) has no
+# daylight-saving shift, so a fixed UTC offset is stable year-round.
+# Monday 08:00 IST == Monday 02:30 UTC.
+on:
+  schedule:
+    - cron: "30 2 * * 1"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run: scrape and classify only — no persistence, no email"
+        type: boolean
+        required: true
+        default: true
+
+# Only one production run may touch the SQLite database at a time. A
+# second run (manual or scheduled) queues behind the first rather than
+# running concurrently against the same file.
+concurrency:
+  group: climate-job-radar-production
+  cancel-in-progress: false
+
+jobs:
+  weekly-run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run test suite
+        run: python -m pytest -q
+
+      - name: Determine run mode
+        id: mode
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            # The scheduled trigger is always a real production run.
+            echo "dry_run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "dry_run=${{ github.event.inputs.dry_run }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run weekly production pipeline
+        id: pipeline
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+        shell: bash
+        run: |
+          set -o pipefail
+          if [ "${{ steps.mode.outputs.dry_run }}" = "true" ]; then
+            MODE_FLAG="--dry-run"
+          else
+            MODE_FLAG="--confirm"
+          fi
+          python scripts/run_weekly_production.py "$MODE_FLAG" 2>&1 | tee weekly_run_summary.txt
+
+      - name: Commit and push updated database
+        if: steps.mode.outputs.dry_run == 'false'
+        shell: bash
+        run: |
+          git config user.name "climate-job-radar-bot"
+          git config user.email "actions@users.noreply.github.com"
+          if git diff --quiet -- data/database/climate_jobs.db; then
+            echo "No database changes to commit."
+          else
+            git add data/database/climate_jobs.db
+            git commit -m "Weekly production run: update notifications database [skip ci]"
+            git push
+          fi
+
+      - name: Write job summary
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "## Weekly Climate Job Radar"
+            echo ""
+            echo "**Mode:** ${{ steps.mode.outputs.dry_run == 'true' && 'DRY RUN' || 'REAL RUN' }}"
+            echo ""
+            echo '```'
+            cat weekly_run_summary.txt 2>/dev/null || echo "(no output captured)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

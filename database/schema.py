@@ -51,6 +51,7 @@ CREATE TABLE IF NOT EXISTS notifications (
   last_seen TEXT NOT NULL,
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL,
+  email_sent INTEGER NOT NULL DEFAULT 0,
   FOREIGN KEY (organization_id) REFERENCES organizations (id) ON DELETE CASCADE,
   FOREIGN KEY (website_id) REFERENCES websites (id) ON DELETE CASCADE
 );
@@ -67,7 +68,30 @@ CREATE TABLE IF NOT EXISTS pdf_documents (
   downloaded INTEGER NOT NULL DEFAULT 0,
   downloaded_at TEXT,
   file_size INTEGER,
+  http_status INTEGER,
+  extracted_text TEXT,
+  extraction_status TEXT,
   FOREIGN KEY (notification_id) REFERENCES notifications (id) ON DELETE CASCADE
+);
+'''
+
+CREATE_NOTIFICATION_REVIEW_QUEUE_TABLE = '''
+CREATE TABLE IF NOT EXISTS notification_review_queue (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  organization_id INTEGER NOT NULL,
+  website_id INTEGER NOT NULL,
+  title TEXT NOT NULL,
+  url TEXT,
+  reason TEXT,
+  classification TEXT NOT NULL,
+  raw_html TEXT,
+  metadata TEXT,
+  hash TEXT NOT NULL UNIQUE,
+  created_at TEXT NOT NULL,
+  reviewed_at TEXT,
+  review_status TEXT NOT NULL DEFAULT 'PENDING',
+  FOREIGN KEY (organization_id) REFERENCES organizations (id) ON DELETE CASCADE,
+  FOREIGN KEY (website_id) REFERENCES websites (id) ON DELETE CASCADE
 );
 '''
 
@@ -83,6 +107,7 @@ CREATE TABLE IF NOT EXISTS scrape_history (
   notifications_added INTEGER DEFAULT 0,
   notifications_updated INTEGER DEFAULT 0,
   error_message TEXT,
+  status_code INTEGER,
   FOREIGN KEY (website_id) REFERENCES websites (id) ON DELETE CASCADE
 );
 '''
@@ -99,6 +124,7 @@ TABLES = [
     CREATE_WEBSITES_TABLE,
     CREATE_NOTIFICATIONS_TABLE,
     CREATE_PDF_DOCUMENTS_TABLE,
+    CREATE_NOTIFICATION_REVIEW_QUEUE_TABLE,
     CREATE_SCRAPE_HISTORY_TABLE,
     CREATE_APPLICATION_SETTINGS_TABLE,
 ]
@@ -136,6 +162,10 @@ CREATE INDEX IF NOT EXISTS idx_pdf_notification_id
 ON pdf_documents (notification_id);
 '''
 
+CREATE_REVIEW_QUEUE_STATUS_INDEX = '''
+CREATE INDEX IF NOT EXISTS idx_review_queue_status ON notification_review_queue (review_status);
+'''
+
 INDEXES = [
     CREATE_NOTIFICATIONS_STATUS_INDEX,
     CREATE_NOTIFICATIONS_DEADLINE_INDEX,
@@ -145,7 +175,21 @@ INDEXES = [
     CREATE_WEBSITES_ENABLED_INDEX,
     CREATE_SCRAPE_HISTORY_WEBSITE_INDEX,
     CREATE_PDF_NOTIFICATION_INDEX,
+    CREATE_REVIEW_QUEUE_STATUS_INDEX,
 ]
+
+# Columns added to existing tables after their initial release. Existing
+# databases created before these were added need them backfilled via
+# ALTER TABLE, since `CREATE TABLE IF NOT EXISTS` only helps fresh databases.
+ADDED_COLUMNS_BY_TABLE = {
+    "notifications": {"email_sent": "INTEGER NOT NULL DEFAULT 0"},
+    "pdf_documents": {
+        "http_status": "INTEGER",
+        "extracted_text": "TEXT",
+        "extraction_status": "TEXT",
+    },
+    "scrape_history": {"status_code": "INTEGER"},
+}
 
 
 def create_schema(connection: Connection) -> None:
@@ -153,6 +197,14 @@ def create_schema(connection: Connection) -> None:
     cursor = connection.cursor()
     for statement in TABLES:
         cursor.execute(statement)
+
+    for table_name, added_columns in ADDED_COLUMNS_BY_TABLE.items():
+        cursor.execute(f"PRAGMA table_info({table_name})")
+        existing_columns = {row[1] for row in cursor.fetchall()}
+        for column_name, column_type in added_columns.items():
+            if column_name not in existing_columns:
+                cursor.execute(f"ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type}")
+
     for statement in INDEXES:
         cursor.execute(statement)
     connection.commit()

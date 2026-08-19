@@ -1,0 +1,155 @@
+name,short_name,homepage_url,country,state,is_active
+Ministry of Earth Sciences,MoES,https://www.moes.gov.in,India,Delhi,1
+India Meteorological Department,IMD,https://mausam.imd.gov.in,India,Delhi,1
+Indian Institute of Tropical Meteorology,IITM,https://www.tropmet.res.in,India,Maharashtra,1
+National Centre for Medium Range Weather Forecasting,NCMRWF,https://www.ncmrwf.gov.in,India,Haryana,1
+Indian National Centre for Ocean Information Services,INCOIS,https://incois.gov.in,India,Telangana,1
+National Institute of Ocean Technology,NIOT,https://www.niot.res.in,India,Tamil Nadu,1
+National Centre for Coastal Research,NCCR,https://www.nccr.gov.in,India,Tamil Nadu,1
+National Centre for Earth Science Studies,NCESS,https://www.ncess.gov.in,India,Kerala,1
+National Centre for Polar and Ocean Research,NCPOR,https://ncpor.res.in,India,Goa,1
+Centre for Marine Living Resources and Ecology,CMLRE,https://cmlre.gov.in,India,Kerala,1
+National Centre for Seismology,NCS,https://seismo.gov.in,India,Delhi,1
+CSIR - National Institute of Oceanography,CSIR-NIO,https://www.nio.res.in,India,Goa,1
+CSIR - National Environmental Engineering Research Institute,CSIR-NEERI,https://www.neeri.res.in,India,Maharashtra,1
+CSIR - National Geophysical Research Institute,CSIR-NGRI,https://www.ngri.res.in,India,Telangana,1
+CSIR - Central Salt and Marine Chemicals Research Institute,CSIR-CSMCRI,https://www.csmcri.res.in,India,Gujarat,1
+CSIR - Fourth Paradigm Institute,CSIR-4PI,https://www.csir4pi.res.in,India,Karnataka,1
+CSIR - National Aerospace Laboratories,CSIR-NAL,https://www.nal.res.in,India,Karnataka,1
+CSIR - Institute of Himalayan Bioresource Technology,CSIR-IHBT,https://www.ihbt.res.in,India,Himachal Pradesh,1
+CSIR - Central Building Research Institute,CSIR-CBRI,https://www.cbri.res.in,India,Uttarakhand,1
+CSIR - Central Road Research Institute,CSIR-CRRI,https://www.crridom.gov.in,India,Delhi,1
+CSIR - National Institute of Science Communication and Policy Research,CSIR-NIScPR,https://www.niscpr.res.in,India,Delhi,1
+Indian Space Research Organisation,ISRO,https://www.isro.gov.in,India,Karnataka,1
+National Remote Sensing Centre,NRSC,https://www.nrsc.gov.in,India,Telangana,1
+Space Applications Centre,SAC,https://www.sac.gov.in,India,Gujarat,1
+Indian Institute of Remote Sensing,IIRS,https://www.iirs.gov.in,India,Uttarakhand,1
+Physical Research Laboratory,PRL,https://www.prl.res.in,India,Gujarat,1
+National Atmospheric Research Laboratory,NARL,https://www.narl.gov.in,India,Andhra Pradesh,1
+Department of Science and Technology,DST,https://dst.gov.in,India,Delhi,1
+Indian Institute of Geomagnetism,IIG,https://www.iigm.res.in,India,Maharashtra,1
+Aryabhatta Research Institute of Observational Sciences,ARIES,https://www.aries.res.in,India,Uttarakhand,1
+Wadia Institute of Himalayan Geology,WIHG,https://www.wihg.res.in,India,Uttarakhand,1
+Birbal Sahni Institute of Palaeosciences,BSIP,https://www.bsip.res.in,India,Uttar Pradesh,1
+National Centre for Sustainable Coastal Management,NCSCM,https://ncscm.res.in,India,Tamil Nadu,1
+ICAR - Central Research Institute for Dryland Agriculture,ICAR-CRIDA,https://www.crida.res.in,India,Telangana,1
+ICAR - Indian Institute of Water Management,ICAR-IIWM,https://www.iiwm.res.in,India,Odisha,1
+ICAR - Indian Institute of Soil and Water Conservation,ICAR-IISWC,https://www.iiswc.org,India,Uttarakhand,1
+ICAR - National Bureau of Soil Survey and Land Use Planning,ICAR-NBSSLUP,https://www.nbsslup.in,India,Maharashtra,1
+ICAR - Central Arid Zone Research Institute,ICAR-CAZRI,https://www.cazri.res.in,India,Rajasthan,1
+ICAR - Central Coastal Agricultural Research Institute,ICAR-CCARI,https://ccari.icar.gov.in,India,Goa,1
+ICAR - National Institute of Abiotic Stress Management,ICAR-NIASM,https://www.niam.res.in,India,Maharashtra,1
+ICAR - Indian Agricultural Research Institute,ICAR-IARI,https://www.iari.res.in,India,Delhi,1
+ICAR - Central Marine Fisheries Research Institute,ICAR-CMFRI,https://www.cmfri.org.in,India,Kerala,1
+ICAR - Central Institute of Fisheries Technology,ICAR-CIFT,https://cift.res.in,India,Kerala,1
+ICAR - Central Institute of Brackishwater Aquaculture,ICAR-CIBA,https://ciba.res.in,India,Tamil Nadu,1
+ICAR - Central Inland Fisheries Research Institute,ICAR-CIFRI,https://cifri.res.in,India,West Bengal,1
+ICAR - Central Soil Salinity Research Institute,ICAR-CSSRI,https://www.cssri.res.in,India,Haryana,1
+Indian Council of Forestry Research and Education,ICFRE,https://icfre.gov.in,India,Uttarakhand,1
+Forest Research Institute,FRI,https://fri.res.in,India,Uttarakhand,1
+Institute of Forest Biodiversity,IFB,https://ifb.icfre.gov.in,India,Telangana,1
+Institute of Wood Science and Technology,IWST,https://iwst.icfre.gov.in,India,Karnataka,1
+Tropical Forest Research Institute,TFRI,https://tfri.icfre.gov.in,India,Madhya Pradesh,1
+Arid Forest Research Institute,AFRI,https://afri.icfre.gov.in,India,Rajasthan,1
+Rain Forest Research Institute,RFRI,https://rfri.icfre.gov.in,India,Assam,1
+Himalayan Forest Research Institute,HFRI,https://hfri.icfre.gov.in,India,Himachal Pradesh,1
+National Disaster Management Authority,NDMA,https://ndma.gov.in,India,Delhi,1
+National Institute of Disaster Management,NIDM,https://nidm.gov.in,India,Delhi,1
+Central Water Commission,CWC,https://cwc.gov.in,India,Delhi,1
+Central Ground Water Board,CGWB,https://cgwb.gov.in,India,Delhi,1
+National Institute of Hydrology,NIH,https://nih.ernet.in,India,Uttarakhand,1
+Geological Survey of India,GSI,https://www.gsi.gov.in,India,West Bengal,1
+Survey of India,SOI,https://www.surveyofindia.gov.in,India,Uttarakhand,1
+Wildlife Institute of India,WII,https://wii.gov.in,India,Uttarakhand,1
+Zoological Survey of India,ZSI,https://zsi.gov.in,India,West Bengal,1
+Botanical Survey of India,BSI,https://bsi.gov.in,India,West Bengal,1
+Indian Institute of Technology Bombay,IIT Bombay,https://www.iitb.ac.in,India,Maharashtra,1
+Indian Institute of Technology Delhi,IIT Delhi,https://home.iitd.ac.in,India,Delhi,1
+Indian Institute of Technology Madras,IIT Madras,https://www.iitm.ac.in,India,Tamil Nadu,1
+Indian Institute of Technology Kharagpur,IIT Kharagpur,https://www.iitkgp.ac.in,India,West Bengal,1
+Indian Institute of Technology Kanpur,IIT Kanpur,https://www.iitk.ac.in,India,Uttar Pradesh,1
+Indian Institute of Technology Roorkee,IIT Roorkee,https://www.iitr.ac.in,India,Uttarakhand,1
+Indian Institute of Technology Guwahati,IIT Guwahati,https://www.iitg.ac.in,India,Assam,1
+Indian Institute of Technology Bhubaneswar,IIT Bhubaneswar,https://www.iitbbs.ac.in,India,Odisha,1
+Indian Institute of Technology Hyderabad,IIT Hyderabad,https://www.iith.ac.in,India,Telangana,1
+Indian Institute of Technology Indore,IIT Indore,https://www.iiti.ac.in,India,Madhya Pradesh,1
+Indian Institute of Technology Gandhinagar,IIT Gandhinagar,https://iitgn.ac.in,India,Gujarat,1
+Indian Institute of Technology Ropar,IIT Ropar,https://www.iitrpr.ac.in,India,Punjab,1
+Indian Institute of Technology Mandi,IIT Mandi,https://www.iitmandi.ac.in,India,Himachal Pradesh,1
+Indian Institute of Technology Patna,IIT Patna,https://www.iitp.ac.in,India,Bihar,1
+Indian Institute of Technology Jodhpur,IIT Jodhpur,https://iitj.ac.in,India,Rajasthan,1
+Indian Institute of Technology (BHU) Varanasi,IIT BHU,https://www.iitbhu.ac.in,India,Uttar Pradesh,1
+Indian Institute of Technology Jammu,IIT Jammu,https://www.iitjammu.ac.in,India,Jammu and Kashmir,1
+Indian Institute of Technology Tirupati,IIT Tirupati,https://iittp.ac.in,India,Andhra Pradesh,1
+Indian Institute of Technology Palakkad,IIT Palakkad,https://www.iitpkd.ac.in,India,Kerala,1
+Indian Institute of Technology Dharwad,IIT Dharwad,https://iitdh.ac.in,India,Karnataka,1
+Indian Institute of Technology Bhilai,IIT Bhilai,https://www.iitbhilai.ac.in,India,Chhattisgarh,1
+Indian Institute of Technology Goa,IIT Goa,https://www.iitgoa.ac.in,India,Goa,1
+Indian Institute of Science Education and Research Pune,IISER Pune,https://www.iiserpune.ac.in,India,Maharashtra,1
+Indian Institute of Science Education and Research Kolkata,IISER Kolkata,https://www.iiserkol.ac.in,India,West Bengal,1
+Indian Institute of Science Education and Research Bhopal,IISER Bhopal,https://www.iiserb.ac.in,India,Madhya Pradesh,1
+Indian Institute of Science Education and Research Mohali,IISER Mohali,https://www.iisermohali.ac.in,India,Punjab,1
+Indian Institute of Science Education and Research Thiruvananthapuram,IISER TVM,https://www.iisertvm.ac.in,India,Kerala,1
+Indian Institute of Science Education and Research Tirupati,IISER Tirupati,https://www.iisertirupati.ac.in,India,Andhra Pradesh,1
+Indian Institute of Science Education and Research Berhampur,IISER Berhampur,https://www.iiserbpr.ac.in,India,Odisha,1
+Indian Institute of Science,IISc,https://www.iisc.ac.in,India,Karnataka,1
+National Institute of Technology Rourkela,NIT Rourkela,https://www.nitrkl.ac.in,India,Odisha,1
+National Institute of Technology Karnataka Surathkal,NITK Surathkal,https://www.nitk.ac.in,India,Karnataka,1
+National Institute of Technology Calicut,NIT Calicut,https://www.nitc.ac.in,India,Kerala,1
+National Institute of Technology Tiruchirappalli,NIT Trichy,https://www.nitt.edu,India,Tamil Nadu,1
+National Institute of Technology Warangal,NIT Warangal,https://www.nitw.ac.in,India,Telangana,1
+National Institute of Technology Silchar,NIT Silchar,https://www.nits.ac.in,India,Assam,1
+National Institute of Technology Kurukshetra,NIT Kurukshetra,https://www.nitkkr.ac.in,India,Haryana,1
+National Institute of Technology Durgapur,NIT Durgapur,https://www.nitdgp.ac.in,India,West Bengal,1
+National Institute of Technology Hamirpur,NIT Hamirpur,https://www.nith.ac.in,India,Himachal Pradesh,1
+National Institute of Technology Meghalaya,NIT Meghalaya,https://www.nitm.ac.in,India,Meghalaya,1
+National Institute of Technology Nagaland,NIT Nagaland,https://www.nitnagaland.ac.in,India,Nagaland,1
+National Institute of Technology Arunachal Pradesh,NIT Arunachal Pradesh,https://www.nitap.ac.in,India,Arunachal Pradesh,1
+National Institute of Technology Mizoram,NIT Mizoram,https://www.nitmz.ac.in,India,Mizoram,1
+National Institute of Technology Manipur,NIT Manipur,https://www.nitmanipur.ac.in,India,Manipur,1
+National Institute of Technology Agartala,NIT Agartala,https://www.nita.ac.in,India,Tripura,1
+National Institute of Technology Patna,NIT Patna,https://www.nitp.ac.in,India,Bihar,1
+National Institute of Technology Jamshedpur,NIT Jamshedpur,https://www.nitjsr.ac.in,India,Jharkhand,1
+National Institute of Technology Raipur,NIT Raipur,https://www.nitrr.ac.in,India,Chhattisgarh,1
+National Institute of Technology Goa,NIT Goa,https://www.nitgoa.ac.in,India,Goa,1
+National Institute of Technology Delhi,NIT Delhi,https://www.nitdelhi.ac.in,India,Delhi,1
+National Institute of Technology Puducherry,NIT Puducherry,https://www.nitpy.ac.in,India,Puducherry,1
+National Institute of Technology Andhra Pradesh,NIT Andhra Pradesh,https://www.nitandhra.ac.in,India,Andhra Pradesh,1
+National Institute of Technology Uttarakhand,NIT Uttarakhand,https://www.nituk.ac.in,India,Uttarakhand,1
+National Institute of Technology Srinagar,NIT Srinagar,https://www.nitsri.ac.in,India,Jammu and Kashmir,1
+Malaviya National Institute of Technology Jaipur,MNIT Jaipur,https://www.mnit.ac.in,India,Rajasthan,1
+Maulana Azad National Institute of Technology Bhopal,MANIT Bhopal,https://www.manit.ac.in,India,Madhya Pradesh,1
+University of Hyderabad,UoH,https://uohyd.ac.in,India,Telangana,1
+Jawaharlal Nehru University,JNU,https://www.jnu.ac.in,India,Delhi,1
+University of Delhi,DU,https://www.du.ac.in,India,Delhi,1
+Pondicherry University,PU,https://www.pondiuni.edu.in,India,Puducherry,1
+Aligarh Muslim University,AMU,https://www.amu.ac.in,India,Uttar Pradesh,1
+Banaras Hindu University,BHU,https://www.bhu.ac.in,India,Uttar Pradesh,1
+Central University of Kerala,CUK,https://www.cukerala.ac.in,India,Kerala,1
+Central University of Tamil Nadu,CUTN,https://www.cutn.ac.in,India,Tamil Nadu,1
+Central University of Karnataka,CUK Karnataka,https://cuk.ac.in,India,Karnataka,1
+Central University of Rajasthan,CURAJ,https://www.curaj.ac.in,India,Rajasthan,1
+Central University of Punjab,CUPB,https://www.cup.edu.in,India,Punjab,1
+Central University of Haryana,CUH,https://cuh.ac.in,India,Haryana,1
+Central University of Jammu,CUJ,https://cujammu.ac.in,India,Jammu and Kashmir,1
+Central University of Himachal Pradesh,CUHP,https://cuhimachal.ac.in,India,Himachal Pradesh,1
+Central University of South Bihar,CUSB,https://cusb.ac.in,India,Bihar,1
+Central University of Gujarat,CUG,https://www.cug.ac.in,India,Gujarat,1
+Anna University,Anna Univ,https://www.annauniv.edu,India,Tamil Nadu,1
+Andhra University,AU,https://www.andhrauniversity.edu.in,India,Andhra Pradesh,1
+Cochin University of Science and Technology,CUSAT,https://www.cusat.ac.in,India,Kerala,1
+Savitribai Phule Pune University,SPPU,https://www.unipune.ac.in,India,Maharashtra,1
+Jadavpur University,JU,https://www.jaduniv.edu.in,India,West Bengal,1
+Osmania University,OU,https://www.osmania.ac.in,India,Telangana,1
+University of Madras,UNOM,https://www.unom.ac.in,India,Tamil Nadu,1
+Bharathiar University,BU,https://www.b-u.ac.in,India,Tamil Nadu,1
+Bharathidasan University,BDU,https://www.bdu.ac.in,India,Tamil Nadu,1
+University of Kerala,KU,https://www.keralauniversity.ac.in,India,Kerala,1
+Kannur University,Kannur Univ,https://kannuruniversity.ac.in,India,Kerala,1
+University of Calicut,Calicut Univ,https://www.uoc.ac.in,India,Kerala,1
+Goa University,Goa Univ,https://www.unigoa.ac.in,India,Goa,1
+Mangalore University,Mangalore Univ,https://mangaloreuniversity.ac.in,India,Karnataka,1
+Sri Venkateswara University,SVU,https://svuniversity.edu.in,India,Andhra Pradesh,1
+Berhampur University,BU Odisha,https://buodisha.edu.in,India,Odisha,1
+Utkal University,Utkal Univ,https://utkaluniversity.ac.in,India,Odisha,1
+Gauhati University,GU,https://www.gauhati.ac.in,India,Assam,1

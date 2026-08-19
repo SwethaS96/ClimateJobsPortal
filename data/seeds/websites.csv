@@ -1,0 +1,155 @@
+organization_name,page_name,url,parser_name,parser_metadata,user_agent,timeout_seconds,scrape_interval_minutes,is_enabled
+Ministry of Earth Sciences,Recruitment,https://www.moes.gov.in/notices/recruitments/recruitments-archive,generic_html,,ClimateJobsBot/1.0,30,1440,1
+India Meteorological Department,Recruitment,https://internal.imd.gov.in/pages/recruits_mausam.php,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Tropical Meteorology,Announcements / Careers (homepage — no dedicated page confirmed),https://www.tropmet.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Centre for Medium Range Weather Forecasting,Announcements / Careers (homepage — no dedicated page confirmed),https://www.ncmrwf.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian National Centre for Ocean Information Services,Recruitment,https://incois.gov.in/,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Ocean Technology,Announcements / Careers (homepage — no dedicated page confirmed),https://www.niot.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Centre for Coastal Research,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nccr.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Centre for Earth Science Studies,Announcements / Careers (homepage — no dedicated page confirmed),https://www.ncess.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Centre for Polar and Ocean Research,Recruitment,https://ncpor.res.in/recruitment,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Centre for Marine Living Resources and Ecology,Announcements / Careers (homepage — no dedicated page confirmed),https://cmlre.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Centre for Seismology,Announcements / Careers (homepage — no dedicated page confirmed),https://seismo.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+CSIR - National Institute of Oceanography,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nio.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+CSIR - National Environmental Engineering Research Institute,Recruitment,https://career.neeri.res.in/,generic_html,,ClimateJobsBot/1.0,30,1440,1
+CSIR - National Geophysical Research Institute,Recruitment,https://rectt.ngri.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+CSIR - Central Salt and Marine Chemicals Research Institute,Announcements / Careers (homepage — no dedicated page confirmed),https://www.csmcri.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+CSIR - Fourth Paradigm Institute,Announcements / Careers (homepage — no dedicated page confirmed),https://www.csir4pi.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+CSIR - National Aerospace Laboratories,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nal.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+CSIR - Institute of Himalayan Bioresource Technology,Announcements / Careers (homepage — no dedicated page confirmed),https://www.ihbt.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+CSIR - Central Building Research Institute,Announcements / Careers (homepage — no dedicated page confirmed),https://www.cbri.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+CSIR - Central Road Research Institute,Announcements / Careers (homepage — no dedicated page confirmed),https://www.crridom.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+CSIR - National Institute of Science Communication and Policy Research,Announcements / Careers (homepage — no dedicated page confirmed),https://www.niscpr.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Space Research Organisation,Announcements / Careers (homepage — no dedicated page confirmed),https://www.isro.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Remote Sensing Centre,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nrsc.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Space Applications Centre,Announcements / Careers (homepage — no dedicated page confirmed),https://www.sac.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Remote Sensing,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iirs.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Physical Research Laboratory,Announcements / Careers (homepage — no dedicated page confirmed),https://www.prl.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Atmospheric Research Laboratory,Announcements / Careers (homepage — no dedicated page confirmed),https://www.narl.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Department of Science and Technology,Announcements / Careers (homepage — no dedicated page confirmed),https://dst.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Geomagnetism,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iigm.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Aryabhatta Research Institute of Observational Sciences,Announcements / Careers (homepage — no dedicated page confirmed),https://www.aries.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Wadia Institute of Himalayan Geology,Announcements / Careers (homepage — no dedicated page confirmed),https://www.wihg.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Birbal Sahni Institute of Palaeosciences,Announcements / Careers (homepage — no dedicated page confirmed),https://www.bsip.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Centre for Sustainable Coastal Management,Announcements / Careers (homepage — no dedicated page confirmed),https://ncscm.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+ICAR - Central Research Institute for Dryland Agriculture,Announcements / Careers (homepage — no dedicated page confirmed),https://www.crida.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+ICAR - Indian Institute of Water Management,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iiwm.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+ICAR - Indian Institute of Soil and Water Conservation,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iiswc.org,generic_html,,ClimateJobsBot/1.0,30,1440,1
+ICAR - National Bureau of Soil Survey and Land Use Planning,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nbsslup.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+ICAR - Central Arid Zone Research Institute,Announcements / Careers (homepage — no dedicated page confirmed),https://www.cazri.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+ICAR - Central Coastal Agricultural Research Institute,Announcements / Careers (homepage — no dedicated page confirmed),https://ccari.icar.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+ICAR - National Institute of Abiotic Stress Management,Announcements / Careers (homepage — no dedicated page confirmed),https://www.niam.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+ICAR - Indian Agricultural Research Institute,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iari.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+ICAR - Central Marine Fisheries Research Institute,Announcements / Careers (homepage — no dedicated page confirmed),https://www.cmfri.org.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+ICAR - Central Institute of Fisheries Technology,Announcements / Careers (homepage — no dedicated page confirmed),https://cift.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+ICAR - Central Institute of Brackishwater Aquaculture,Announcements / Careers (homepage — no dedicated page confirmed),https://ciba.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+ICAR - Central Inland Fisheries Research Institute,Announcements / Careers (homepage — no dedicated page confirmed),https://cifri.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+ICAR - Central Soil Salinity Research Institute,Announcements / Careers (homepage — no dedicated page confirmed),https://www.cssri.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Council of Forestry Research and Education,Announcements / Careers (homepage — no dedicated page confirmed),https://icfre.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Forest Research Institute,Announcements / Careers (homepage — no dedicated page confirmed),https://fri.res.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Institute of Forest Biodiversity,Announcements / Careers (homepage — no dedicated page confirmed),https://ifb.icfre.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Institute of Wood Science and Technology,Announcements / Careers (homepage — no dedicated page confirmed),https://iwst.icfre.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Tropical Forest Research Institute,Announcements / Careers (homepage — no dedicated page confirmed),https://tfri.icfre.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Arid Forest Research Institute,Announcements / Careers (homepage — no dedicated page confirmed),https://afri.icfre.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Rain Forest Research Institute,Announcements / Careers (homepage — no dedicated page confirmed),https://rfri.icfre.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Himalayan Forest Research Institute,Announcements / Careers (homepage — no dedicated page confirmed),https://hfri.icfre.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Disaster Management Authority,Announcements / Careers (homepage — no dedicated page confirmed),https://ndma.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Disaster Management,Announcements / Careers (homepage — no dedicated page confirmed),https://nidm.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Central Water Commission,Announcements / Careers (homepage — no dedicated page confirmed),https://cwc.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Central Ground Water Board,Announcements / Careers (homepage — no dedicated page confirmed),https://cgwb.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Hydrology,Announcements / Careers (homepage — no dedicated page confirmed),https://nih.ernet.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Geological Survey of India,Announcements / Careers (homepage — no dedicated page confirmed),https://www.gsi.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Survey of India,Announcements / Careers (homepage — no dedicated page confirmed),https://www.surveyofindia.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Wildlife Institute of India,Announcements / Careers (homepage — no dedicated page confirmed),https://wii.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Zoological Survey of India,Announcements / Careers (homepage — no dedicated page confirmed),https://zsi.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Botanical Survey of India,Announcements / Careers (homepage — no dedicated page confirmed),https://bsi.gov.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology Bombay,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iitb.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology Delhi,Announcements / Careers (homepage — no dedicated page confirmed),https://home.iitd.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology Madras,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iitm.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology Kharagpur,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iitkgp.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology Kanpur,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iitk.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology Roorkee,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iitr.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology Guwahati,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iitg.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology Bhubaneswar,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iitbbs.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology Hyderabad,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iith.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology Indore,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iiti.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology Gandhinagar,Announcements / Careers (homepage — no dedicated page confirmed),https://iitgn.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology Ropar,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iitrpr.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology Mandi,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iitmandi.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology Patna,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iitp.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology Jodhpur,Announcements / Careers (homepage — no dedicated page confirmed),https://iitj.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology (BHU) Varanasi,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iitbhu.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology Jammu,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iitjammu.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology Tirupati,Announcements / Careers (homepage — no dedicated page confirmed),https://iittp.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology Palakkad,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iitpkd.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology Dharwad,Announcements / Careers (homepage — no dedicated page confirmed),https://iitdh.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology Bhilai,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iitbhilai.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Technology Goa,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iitgoa.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Science Education and Research Pune,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iiserpune.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Science Education and Research Kolkata,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iiserkol.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Science Education and Research Bhopal,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iiserb.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Science Education and Research Mohali,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iisermohali.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Science Education and Research Thiruvananthapuram,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iisertvm.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Science Education and Research Tirupati,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iisertirupati.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Science Education and Research Berhampur,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iiserbpr.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Indian Institute of Science,Announcements / Careers (homepage — no dedicated page confirmed),https://www.iisc.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Rourkela,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nitrkl.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Karnataka Surathkal,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nitk.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Calicut,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nitc.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Tiruchirappalli,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nitt.edu,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Warangal,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nitw.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Silchar,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nits.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Kurukshetra,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nitkkr.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Durgapur,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nitdgp.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Hamirpur,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nith.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Meghalaya,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nitm.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Nagaland,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nitnagaland.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Arunachal Pradesh,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nitap.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Mizoram,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nitmz.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Manipur,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nitmanipur.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Agartala,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nita.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Patna,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nitp.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Jamshedpur,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nitjsr.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Raipur,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nitrr.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Goa,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nitgoa.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Delhi,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nitdelhi.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Puducherry,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nitpy.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Andhra Pradesh,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nitandhra.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Uttarakhand,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nituk.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+National Institute of Technology Srinagar,Announcements / Careers (homepage — no dedicated page confirmed),https://www.nitsri.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Malaviya National Institute of Technology Jaipur,Announcements / Careers (homepage — no dedicated page confirmed),https://www.mnit.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Maulana Azad National Institute of Technology Bhopal,Announcements / Careers (homepage — no dedicated page confirmed),https://www.manit.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+University of Hyderabad,Announcements / Careers (homepage — no dedicated page confirmed),https://uohyd.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Jawaharlal Nehru University,Announcements / Careers (homepage — no dedicated page confirmed),https://www.jnu.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+University of Delhi,Announcements / Careers (homepage — no dedicated page confirmed),https://www.du.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Pondicherry University,Announcements / Careers (homepage — no dedicated page confirmed),https://www.pondiuni.edu.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Aligarh Muslim University,Announcements / Careers (homepage — no dedicated page confirmed),https://www.amu.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Banaras Hindu University,Announcements / Careers (homepage — no dedicated page confirmed),https://www.bhu.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Central University of Kerala,Announcements / Careers (homepage — no dedicated page confirmed),https://www.cukerala.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Central University of Tamil Nadu,Announcements / Careers (homepage — no dedicated page confirmed),https://www.cutn.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Central University of Karnataka,Announcements / Careers (homepage — no dedicated page confirmed),https://cuk.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Central University of Rajasthan,Announcements / Careers (homepage — no dedicated page confirmed),https://www.curaj.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Central University of Punjab,Announcements / Careers (homepage — no dedicated page confirmed),https://www.cup.edu.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Central University of Haryana,Announcements / Careers (homepage — no dedicated page confirmed),https://cuh.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Central University of Jammu,Announcements / Careers (homepage — no dedicated page confirmed),https://cujammu.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Central University of Himachal Pradesh,Announcements / Careers (homepage — no dedicated page confirmed),https://cuhimachal.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Central University of South Bihar,Announcements / Careers (homepage — no dedicated page confirmed),https://cusb.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Central University of Gujarat,Announcements / Careers (homepage — no dedicated page confirmed),https://www.cug.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Anna University,Announcements / Careers (homepage — no dedicated page confirmed),https://www.annauniv.edu,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Andhra University,Announcements / Careers (homepage — no dedicated page confirmed),https://www.andhrauniversity.edu.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Cochin University of Science and Technology,Announcements / Careers (homepage — no dedicated page confirmed),https://www.cusat.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Savitribai Phule Pune University,Announcements / Careers (homepage — no dedicated page confirmed),https://www.unipune.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Jadavpur University,Announcements / Careers (homepage — no dedicated page confirmed),https://www.jaduniv.edu.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Osmania University,Announcements / Careers (homepage — no dedicated page confirmed),https://www.osmania.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+University of Madras,Announcements / Careers (homepage — no dedicated page confirmed),https://www.unom.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Bharathiar University,Announcements / Careers (homepage — no dedicated page confirmed),https://www.b-u.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Bharathidasan University,Announcements / Careers (homepage — no dedicated page confirmed),https://www.bdu.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+University of Kerala,Announcements / Careers (homepage — no dedicated page confirmed),https://www.keralauniversity.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Kannur University,Announcements / Careers (homepage — no dedicated page confirmed),https://kannuruniversity.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+University of Calicut,Announcements / Careers (homepage — no dedicated page confirmed),https://www.uoc.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Goa University,Announcements / Careers (homepage — no dedicated page confirmed),https://www.unigoa.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Mangalore University,Announcements / Careers (homepage — no dedicated page confirmed),https://mangaloreuniversity.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Sri Venkateswara University,Announcements / Careers (homepage — no dedicated page confirmed),https://svuniversity.edu.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Berhampur University,Announcements / Careers (homepage — no dedicated page confirmed),https://buodisha.edu.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Utkal University,Announcements / Careers (homepage — no dedicated page confirmed),https://utkaluniversity.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1
+Gauhati University,Announcements / Careers (homepage — no dedicated page confirmed),https://www.gauhati.ac.in,generic_html,,ClimateJobsBot/1.0,30,1440,1

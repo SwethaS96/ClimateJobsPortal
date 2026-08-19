@@ -25,6 +25,7 @@ def insert_scrape_history(
     notifications_added: int = 0,
     notifications_updated: int = 0,
     error_message: str | None = None,
+    status_code: int | None = None,
 ) -> int:
     """Insert a new scrape history record and return its id."""
     conn = get_connection()
@@ -34,9 +35,9 @@ def insert_scrape_history(
             """
             INSERT INTO scrape_history
                 (website_id, started_at, finished_at, duration_seconds, status,
-                 notifications_found, notifications_added, notifications_updated, error_message)
+                 notifications_found, notifications_added, notifications_updated, error_message, status_code)
             VALUES
-                (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 website_id,
@@ -48,6 +49,7 @@ def insert_scrape_history(
                 notifications_added,
                 notifications_updated,
                 error_message,
+                status_code,
             ),
         )
         conn.commit()
@@ -108,6 +110,7 @@ def update_scrape_history(
     notifications_added: int | None = None,
     notifications_updated: int | None = None,
     error_message: str | None = None,
+    status_code: int | None = None,
 ) -> bool:
     """Update a scrape history record. Returns True if one row was updated."""
     fields: List[str] = []
@@ -140,6 +143,9 @@ def update_scrape_history(
     if error_message is not None:
         fields.append("error_message = ?")
         values.append(error_message)
+    if status_code is not None:
+        fields.append("status_code = ?")
+        values.append(status_code)
 
     if not fields:
         return False

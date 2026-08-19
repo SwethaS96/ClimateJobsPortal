@@ -120,6 +120,36 @@ def get_websites_by_organization(organization_id: int) -> List[sqlite3.Row]:
         close_connection(conn)
 
 
+def get_websites_by_ids(website_ids: List[int]) -> List[sqlite3.Row]:
+    """Return websites by id, including disabled ones, in no particular order.
+
+    Unlike `get_website_by_id`/`get_all_websites`, this does not filter on
+    `is_enabled` — callers here need to audit a website's configuration
+    (including its enabled status) regardless of whether it is currently
+    enabled.
+    """
+    if not website_ids:
+        return []
+
+    conn = get_connection()
+    try:
+        cur = conn.cursor()
+        placeholders = ",".join("?" for _ in website_ids)
+        cur.execute(
+            f"""
+            SELECT id, organization_id, page_name, url, parser_name, parser_metadata,
+                   user_agent, timeout_seconds, scrape_interval_minutes, is_enabled,
+                   last_scraped, created_at, updated_at
+            FROM websites
+            WHERE id IN ({placeholders})
+            """,
+            tuple(website_ids),
+        )
+        return list(cur.fetchall())
+    finally:
+        close_connection(conn)
+
+
 def update_website(
     website_id: int,
     page_name: str | None = None,

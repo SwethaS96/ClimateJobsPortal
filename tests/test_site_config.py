@@ -149,3 +149,94 @@ def test_load_enabled_websites_ignores_disabled_websites():
         assert configs[0].page_name == "Enabled Page"
     finally:
         temp_dir.cleanup()
+
+
+def test_load_websites_by_ids_returns_requested_order():
+    temp_dir = setup_isolated_database()
+    try:
+        org_id = organization_repository.insert_organization(**mock_data.ORGANIZATION_1)
+        id_a = insert_website(
+            organization_id=org_id,
+            page_name="A Page",
+            url="https://example.org/a",
+            parser_name="generic_html",
+            parser_metadata=None,
+            user_agent=None,
+            timeout_seconds=30,
+            scrape_interval_minutes=60,
+        )
+        id_b = insert_website(
+            organization_id=org_id,
+            page_name="B Page",
+            url="https://example.org/b",
+            parser_name="generic_html",
+            parser_metadata=None,
+            user_agent=None,
+            timeout_seconds=30,
+            scrape_interval_minutes=60,
+        )
+
+        loader = SiteConfigLoader()
+        configs = loader.load_websites_by_ids([id_b, id_a])
+
+        assert [config.id for config in configs] == [id_b, id_a]
+    finally:
+        temp_dir.cleanup()
+
+
+def test_load_websites_by_ids_includes_disabled_websites():
+    temp_dir = setup_isolated_database()
+    try:
+        org_id = organization_repository.insert_organization(**mock_data.ORGANIZATION_1)
+        disabled_id = insert_website(
+            organization_id=org_id,
+            page_name="Disabled Page",
+            url="https://disabled.example.com",
+            parser_name="generic_html",
+            parser_metadata=None,
+            user_agent=None,
+            timeout_seconds=30,
+            scrape_interval_minutes=60,
+        )
+        soft_delete_website(disabled_id)
+
+        loader = SiteConfigLoader()
+        configs = loader.load_websites_by_ids([disabled_id])
+
+        assert len(configs) == 1
+        assert configs[0].id == disabled_id
+    finally:
+        temp_dir.cleanup()
+
+
+def test_load_websites_by_ids_ignores_unknown_ids():
+    temp_dir = setup_isolated_database()
+    try:
+        org_id = organization_repository.insert_organization(**mock_data.ORGANIZATION_1)
+        known_id = insert_website(
+            organization_id=org_id,
+            page_name="Known Page",
+            url="https://example.org/known",
+            parser_name="generic_html",
+            parser_metadata=None,
+            user_agent=None,
+            timeout_seconds=30,
+            scrape_interval_minutes=60,
+        )
+
+        loader = SiteConfigLoader()
+        configs = loader.load_websites_by_ids([known_id, 999999])
+
+        assert len(configs) == 1
+        assert configs[0].id == known_id
+    finally:
+        temp_dir.cleanup()
+
+
+def test_load_websites_by_ids_empty_list_returns_empty():
+    temp_dir = setup_isolated_database()
+    try:
+        loader = SiteConfigLoader()
+        assert loader.load_websites_by_ids([]) == []
+    finally:
+        temp_dir.cleanup()
