@@ -6,7 +6,7 @@ name: Weekly Climate Job Radar
 # Monday 08:00 IST == Monday 02:30 UTC.
 on:
   schedule:
-    - cron: "30 2 * * 1"
+    - cron: "30 2 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
