@@ -9,6 +9,7 @@ import pytest
 
 import database.connection as connection_module
 import services.notification_service as notification_service_module
+from ai.job_type_classifier import JobTypeClassifier
 from database.schema import create_schema
 from parser.models import ParsedNotification
 from pdf.pdf_downloader import PDFDownloader
@@ -548,3 +549,146 @@ def test_persist_reports_pdf_download_failure(isolated_db: Path, tmp_path: Path)
     assert result["pdf_download_failed"] == 1
     assert result["pdf_extraction_success"] == 0
     assert result["pdf_extraction_failed"] == 0
+
+
+# ---------------------------------------------------------------------------
+# Job-type classification (Phase 36): only reachable for VALID candidates.
+# ---------------------------------------------------------------------------
+
+
+def test_valid_candidate_reaches_job_type_classifier(isolated_db: Path) -> None:
+    classifier = Mock(spec=JobTypeClassifier)
+    classifier.classify.return_value = {"job_type": "JRF", "confidence": 0.9}
+    service = NotificationService(job_type_classifier=classifier)
+
+    scrape_result = make_scrape_result(
+        [ParsedNotification(title="Advertisement for Junior Research Fellow (JRF)", url="https://example.org/jobs/1")]
+    )
+    service.persist(scrape_result, organization_id=1)
+
+    classifier.classify.assert_called_once()
+    rows = fetch_notification_rows()
+    assert rows[0]["job_type"] == "JRF"
+    assert rows[0]["job_type_confidence"] == 0.9
+
+
+def test_invalid_candidate_never_reaches_job_type_classifier(isolated_db: Path) -> None:
+    classifier = Mock(spec=JobTypeClassifier)
+    service = NotificationService(job_type_classifier=classifier)
+
+    scrape_result = make_scrape_result(
+        [ParsedNotification(title="Scientists", url="https://example.org/scientists.php")]
+    )
+    result = service.persist(scrape_result, organization_id=1)
+
+    assert result["skipped_invalid"] == 1
+    classifier.classify.assert_not_called()
+
+
+def test_review_candidate_never_reaches_job_type_classifier(isolated_db: Path) -> None:
+    classifier = Mock(spec=JobTypeClassifier)
+    service = NotificationService(job_type_classifier=classifier)
+
+    scrape_result = make_scrape_result(
+        [ParsedNotification(title="Departmental Update", url="https://example.org/news/42")]
+    )
+    result = service.persist(scrape_result, organization_id=1)
+
+    assert result["skipped_review"] == 1
+    classifier.classify.assert_not_called()
+
+
+def test_job_type_classifier_cannot_turn_invalid_into_valid(isolated_db: Path) -> None:
+    """Even a classifier stubbed to claim something is a great JRF opening
+    has no path to override NotificationValidator's INVALID verdict —
+    it's never even invoked for this candidate."""
+    classifier = Mock(spec=JobTypeClassifier)
+    classifier.classify.return_value = {"job_type": "JRF", "confidence": 0.99}
+    service = NotificationService(job_type_classifier=classifier)
+
+    scrape_result = make_scrape_result(
+        [ParsedNotification(title="Scientists", url="https://example.org/scientists.php")]
+    )
+    service.persist(scrape_result, organization_id=1)
+
+    assert fetch_notification_rows() == []
+    classifier.classify.assert_not_called()
+
+
+def test_job_type_classifier_failure_does_not_block_persistence(isolated_db: Path) -> None:
+    classifier = Mock(spec=JobTypeClassifier)
+    classifier.classify.side_effect = RuntimeError("classifier backend exploded")
+    service = NotificationService(job_type_classifier=classifier)
+
+    scrape_result = make_scrape_result(
+        [ParsedNotification(title="Advertisement for Project Associate", url="https://example.org/jobs/1")]
+    )
+    result = service.persist(scrape_result, organization_id=1)
+
+    assert result["inserted"] == 1
+    assert result["failed"] == 0
+    rows = fetch_notification_rows()
+    assert rows[0]["job_type"] == "UNKNOWN"
+    assert rows[0]["job_type_confidence"] == 0.0
+
+
+def test_default_job_type_classifier_is_used_when_none_injected(isolated_db: Path) -> None:
+    """No classifier passed in -> the real, free, local rule-based
+    classifier runs by default (no external dependency required)."""
+    service = NotificationService()
+
+    scrape_result = make_scrape_result(
+        [ParsedNotification(title="Advertisement for Senior Research Fellow (SRF)", url="https://example.org/jobs/1")]
+    )
+    service.persist(scrape_result, organization_id=1)
+
+    rows = fetch_notification_rows()
+    assert rows[0]["job_type"] == "SRF"
+
+
+def test_updating_an_existing_notification_does_not_reclassify_job_type(isolated_db: Path) -> None:
+    """The classifier only runs on new inserts — re-seeing an existing
+    notification (touch_last_seen) must not modify its stored job_type."""
+    classifier = Mock(spec=JobTypeClassifier)
+    classifier.classify.return_value = {"job_type": "JRF", "confidence": 0.9}
+    service = NotificationService(job_type_classifier=classifier)
+
+    scrape_result = make_scrape_result(
+        [ParsedNotification(title="Advertisement for Junior Research Fellow (JRF)", url="https://example.org/jobs/1")]
+    )
+    service.persist(scrape_result, organization_id=1)
+    assert classifier.classify.call_count == 1
+
+    service.persist(scrape_result, organization_id=1)
+    assert classifier.classify.call_count == 1  # not called again on the update path
+    rows = fetch_notification_rows()
+    assert len(rows) == 1
+    assert rows[0]["job_type"] == "JRF"
+
+
+def test_repeated_scrape_touch_path_never_changes_status_or_email_sent(isolated_db: Path) -> None:
+    """Phase 41 Part H: re-seeing an already-persisted notification must
+    never flip its `status` or `email_sent` flag — those are untouched by
+    `touch_last_seen`, and job-type classification was never wired into
+    that path either."""
+    service = NotificationService()
+    notification = ParsedNotification(title="Advertisement for Senior Research Fellow (SRF)", url="https://example.org/jobs/1")
+
+    service.persist(make_scrape_result([notification]), organization_id=1)
+    rows = fetch_notification_rows()
+    notification_id = rows[0]["id"]
+
+    conn = connection_module.get_connection()
+    try:
+        conn.execute("UPDATE notifications SET email_sent = 1 WHERE id = ?", (notification_id,))
+        conn.commit()
+    finally:
+        connection_module.close_connection(conn)
+
+    service.persist(make_scrape_result([notification]), organization_id=1)
+
+    rows_after = fetch_notification_rows()
+    assert len(rows_after) == 1
+    assert rows_after[0]["status"] == "ACTIVE"
+    assert rows_after[0]["email_sent"] == 1
+    assert rows_after[0]["job_type"] == "SRF"  # set at original insert, never rewritten

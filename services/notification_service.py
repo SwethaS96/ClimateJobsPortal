@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import json
 
+from ai.job_type_classifier import JobTypeClassifier, build_default_classifier
 from database.repositories.notification_repository import insert_notification, touch_last_seen
 from database.repositories.notification_review_queue_repository import (
     get_review_candidate_by_hash,
@@ -46,10 +47,12 @@ class NotificationService:
         validator: NotificationValidator | None = None,
         duplicate_detector: DuplicateDetector | None = None,
         pdf_processing_service: PDFProcessingService | None = None,
+        job_type_classifier: JobTypeClassifier | None = None,
     ) -> None:
         self.validator = validator or NotificationValidator()
         self.duplicate_detector = duplicate_detector or DuplicateDetector()
         self.pdf_processing_service = pdf_processing_service or PDFProcessingService()
+        self.job_type_classifier = job_type_classifier or build_default_classifier()
 
     def persist(self, scrape_result: ScrapeResult, organization_id: int) -> dict[str, object]:
         """Save parsed notifications for one scrape result.
@@ -150,6 +153,7 @@ class NotificationService:
             return "updated", pdf_result
 
         hash_value = self.duplicate_detector.build_hash(title, url)
+        job_type, job_type_confidence = self._classify_job_type(title, parsed_notification)
         notification_id = insert_notification(
             organization_id=organization_id,
             website_id=website_id,
@@ -160,9 +164,27 @@ class NotificationService:
             application_deadline=parsed_notification.deadline,
             page_url=url or None,
             hash=hash_value,
+            job_type=job_type,
+            job_type_confidence=job_type_confidence,
         )
         pdf_result = self._process_pdf(notification_id, parsed_notification)
         return "inserted", pdf_result
+
+    def _classify_job_type(
+        self, title: str, parsed_notification: ParsedNotification
+    ) -> tuple[str | None, float | None]:
+        """Job-type classification for a VALID candidate only — never
+        called for INVALID/REVIEW. `JobTypeClassifier.classify()` already
+        fails safely on its own (never raises, always returns a valid
+        result), but this is called on the hot persistence path so an
+        extra try/except costs nothing and guarantees a classifier defect
+        can never block a notification from being saved.
+        """
+        try:
+            result = self.job_type_classifier.classify(title, parsed_notification.summary or "")
+            return result["job_type"], result["confidence"]
+        except Exception:
+            return "UNKNOWN", 0.0
 
     def _process_pdf(self, notification_id: int, parsed_notification: ParsedNotification) -> dict | None:
         """Download and extract text for a VALID notification's PDF, if any.

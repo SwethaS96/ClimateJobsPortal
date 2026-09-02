@@ -1,12 +1,19 @@
 """Production email digest service.
 
-Builds and sends ONE consolidated HTML digest email covering every unsent
-VALID notification (grouped by organization for readability), then marks
-only the notifications actually included in a successfully-delivered email
-as `email_sent = 1`. REVIEW candidates live in a separate table
-(`notification_review_queue`) and INVALID candidates are never persisted at
-all, so the `notifications` table this service reads from is VALID-only by
-construction — no extra classification filter is needed here.
+Builds and sends ONE consolidated email per run covering every unsent
+VALID notification, then marks only the notifications actually included
+in a successfully-delivered email as `email_sent = 1`. REVIEW candidates
+live in a separate table (`notification_review_queue`) and INVALID
+candidates are never persisted at all, so the `notifications` table this
+service reads from is VALID-only by construction — no extra
+classification filter is needed here.
+
+Delivery format: DATABASE -> EXCEL DIGEST -> SHORT EMAIL WITH EXCEL
+ATTACHMENT. The email body itself stays short (a few sentences, no
+per-notification listing) — the full notification list, with filtering
+and sorting, lives in an attached .xlsx workbook built by
+`ExcelDigestBuilder` from the exact same notification set
+`build_pending_digest()` already selects.
 
 The `EmailProvider` protocol keeps the delivery mechanism swappable: SMTP
 today (`SMTPEmailProvider`), a different provider later, without touching
@@ -16,22 +23,34 @@ today (`SMTPEmailProvider`), a different provider later, without touching
 from __future__ import annotations
 
 import html as html_lib
+import shutil
 import smtplib
 from dataclasses import dataclass
 from datetime import datetime, timezone
+from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from pathlib import Path
 from typing import Any, Protocol
 
 from config import settings
 from database.repositories import notification_repository
+from services.excel_digest_builder import ExcelDigestBuilder
 
 
 class EmailProvider(Protocol):
     """Abstract interface for an email delivery backend."""
 
-    def send(self, recipients: list[str], subject: str, html_body: str) -> bool:
-        """Send an HTML email and return whether the delivery succeeded."""
+    def send(
+        self,
+        recipients: list[str],
+        subject: str,
+        html_body: str,
+        attachment_path: str | None = None,
+        attachment_filename: str | None = None,
+    ) -> bool:
+        """Send an HTML email, optionally with one file attached, and
+        return whether the delivery succeeded."""
 
 
 class SMTPEmailProvider:
@@ -57,15 +76,33 @@ class SMTPEmailProvider:
         self.use_tls = use_tls
         self.timeout_seconds = timeout_seconds
 
-    def send(self, recipients: list[str], subject: str, html_body: str) -> bool:
+    def send(
+        self,
+        recipients: list[str],
+        subject: str,
+        html_body: str,
+        attachment_path: str | None = None,
+        attachment_filename: str | None = None,
+    ) -> bool:
         if not recipients:
             return False
 
-        message = MIMEMultipart("alternative")
+        message = MIMEMultipart("mixed")
         message["Subject"] = subject
         message["From"] = self.sender
         message["To"] = ", ".join(recipients)
-        message.attach(MIMEText(html_body, "html"))
+
+        body = MIMEMultipart("alternative")
+        body.attach(MIMEText(html_body, "html"))
+        message.attach(body)
+
+        if attachment_path:
+            with open(attachment_path, "rb") as handle:
+                attachment = MIMEApplication(handle.read())
+            attachment.add_header(
+                "Content-Disposition", "attachment", filename=attachment_filename or Path(attachment_path).name
+            )
+            message.attach(attachment)
 
         try:
             with smtplib.SMTP(self.host, self.port, timeout=self.timeout_seconds) as server:
@@ -110,7 +147,9 @@ class EmailDigestService:
         organization. Never modifies the database.
 
         By default selects up to `limit` (or `self.max_notifications`)
-        unsent notifications, most-recent-first per organization. When
+        unsent notifications, most-recent-first per organization. Either
+        one may be `None`, meaning no cap at all — every pending
+        notification is included, with no silent truncation. When
         `notification_ids` is given, selects exactly those ids instead —
         still constrained to `status = 'ACTIVE' AND email_sent = 0` as a
         safety net, so an id that's already been sent or deactivated is
@@ -132,7 +171,10 @@ class EmailDigestService:
                     rows = conn.execute(
                         f"""
                         SELECT n.id, n.organization_id, o.name AS organization_name, n.title,
-                               n.page_url, n.first_seen, n.application_deadline, n.category,
+                               n.page_url, n.first_seen, n.last_seen, n.application_deadline,
+                               n.category, n.job_type,
+                               o.state AS organization_state, o.country AS organization_country,
+                               w.url AS website_url,
                                (
                                    SELECT p.pdf_url FROM pdf_documents p
                                    WHERE p.notification_id = n.id
@@ -140,6 +182,7 @@ class EmailDigestService:
                                ) AS pdf_url
                         FROM notifications n
                         JOIN organizations o ON o.id = n.organization_id
+                        JOIN websites w ON w.id = n.website_id
                         WHERE n.status = 'ACTIVE' AND n.email_sent = 0 AND n.id IN ({placeholders})
                         ORDER BY o.name COLLATE NOCASE ASC, n.first_seen DESC
                         """,
@@ -147,10 +190,12 @@ class EmailDigestService:
                     ).fetchall()
             else:
                 limit = self.max_notifications if limit is None else limit
-                rows = conn.execute(
-                    """
+                query = """
                     SELECT n.id, n.organization_id, o.name AS organization_name, n.title,
-                           n.page_url, n.first_seen, n.application_deadline, n.category,
+                           n.page_url, n.first_seen, n.last_seen, n.application_deadline,
+                           n.category, n.job_type,
+                           o.state AS organization_state, o.country AS organization_country,
+                           w.url AS website_url,
                            (
                                SELECT p.pdf_url FROM pdf_documents p
                                WHERE p.notification_id = n.id
@@ -158,12 +203,17 @@ class EmailDigestService:
                            ) AS pdf_url
                     FROM notifications n
                     JOIN organizations o ON o.id = n.organization_id
+                    JOIN websites w ON w.id = n.website_id
                     WHERE n.status = 'ACTIVE' AND n.email_sent = 0
                     ORDER BY o.name COLLATE NOCASE ASC, n.first_seen DESC
-                    LIMIT ?
-                    """,
-                    (limit,),
-                ).fetchall()
+                """
+                if limit is None:
+                    # No cap at all — every pending notification is
+                    # included. No LIMIT clause, not a huge sentinel value,
+                    # so there is no silent truncation at any scale.
+                    rows = conn.execute(query).fetchall()
+                else:
+                    rows = conn.execute(query + " LIMIT ?", (limit,)).fetchall()
         finally:
             notification_repository.close_connection(conn)
 
@@ -209,6 +259,9 @@ class EmailDigestService:
         parts = [f"<li>{link}"]
 
         meta_parts = []
+        job_type = notification.get("job_type")
+        if job_type and job_type != "UNKNOWN":
+            meta_parts.append(f"Job Type: {html_lib.escape(str(job_type))}")
         if notification.get("first_seen"):
             meta_parts.append(f"Detected: {html_lib.escape(str(notification['first_seen'])[:10])}")
         if notification.get("application_deadline"):
@@ -229,17 +282,43 @@ class EmailDigestService:
         parts.append("</li>")
         return "".join(parts)
 
+    def render_short_digest_html(self, notification_count: int, generated_at: str) -> str:
+        """The actual email body sent in production: short, no
+        per-notification listing — the full list lives in the attached
+        Excel workbook instead. Never grows with the number of
+        notifications, however many thousand there are."""
+        count_text = f"{notification_count:,} new opportunit{'y' if notification_count == 1 else 'ies'}"
+        return (
+            "<html><body style=\"font-family: sans-serif;\">"
+            "<h2>ClimateJobsPortal — Recruitment Digest</h2>"
+            f"<p>{html_lib.escape(generated_at)}</p>"
+            f"<p>{count_text} {'is' if notification_count == 1 else 'are'} included in the attached "
+            "Excel workbook.</p>"
+            "<p>The workbook contains:</p>"
+            "<ul>"
+            "<li>New Opportunities</li>"
+            "<li>Summary</li>"
+            "<li>Closing Soon</li>"
+            "</ul>"
+            "<p>The Excel file supports filtering and sorting by the available fields.</p>"
+            "<p>Please see the attached workbook for the complete list.</p>"
+            "</body></html>"
+        )
+
     def send_digest(
         self, recipients: list[str] | None = None, notification_ids: list[int] | None = None
     ) -> dict[str, Any]:
         """Send exactly one consolidated digest email for unsent VALID
-        notifications — either the usual "next N unsent" selection (up to
-        `self.max_notifications`), or exactly `notification_ids` when given
-        (see `build_pending_digest`).
+        notifications — either the usual "every pending notification, or
+        up to `self.max_notifications` if a cap is configured" selection,
+        or exactly `notification_ids` when given (see `build_pending_digest`).
 
-        Notifications are marked `email_sent = 1` ONLY after a successful
-        delivery, and ONLY the notifications actually included in that
-        email — never before sending, and never on failure.
+        Flow: build the digest -> generate the Excel workbook -> verify it
+        was written -> send the short email with the workbook attached ->
+        ONLY after successful delivery, mark every notification included
+        in that exact digest as `email_sent = 1`. If Excel generation
+        fails, or SMTP delivery fails, nothing is marked sent — a retry
+        finds every one of those notifications still pending.
         """
         digest = self.build_pending_digest(notification_ids=notification_ids)
 
@@ -265,14 +344,41 @@ class EmailDigestService:
         if self.email_provider is None:
             raise ValueError("An email provider is required")
 
-        generated_at = datetime.now(timezone.utc).strftime("%B %d, %Y")
-        subject = f"Climate Research Job Radar — New Recruitment Alerts — {generated_at}"
-        html_body = self.render_digest_html(digest.grouped, generated_at)
+        now = datetime.now(timezone.utc)
+        generated_at_display = now.strftime("%B %d, %Y")
+        subject = f"ClimateJobsPortal — Recruitment Digest — {generated_at_display}"
+        html_body = self.render_short_digest_html(digest.included_count, generated_at_display)
+
+        workbook_dir: Path | None = None
+        try:
+            workbook_path = ExcelDigestBuilder().build(digest.notifications, now)
+            workbook_dir = workbook_path.parent
+            if not workbook_path.exists() or workbook_path.stat().st_size == 0:
+                raise RuntimeError("Excel workbook was not written")
+        except Exception:
+            if workbook_dir is not None:
+                shutil.rmtree(workbook_dir, ignore_errors=True)
+            return {
+                "sent": False,
+                "message": "Excel workbook generation failed; email not sent, no notifications marked as sent.",
+                "notifications_included": 0,
+                "notifications_excluded": digest.total_unsent,
+                "organizations_included": 0,
+            }
 
         try:
-            delivered = self.email_provider.send(recipients=recipients, subject=subject, html_body=html_body)
-        except Exception:
-            delivered = False
+            try:
+                delivered = self.email_provider.send(
+                    recipients=recipients,
+                    subject=subject,
+                    html_body=html_body,
+                    attachment_path=str(workbook_path),
+                    attachment_filename=workbook_path.name,
+                )
+            except Exception:
+                delivered = False
+        finally:
+            shutil.rmtree(workbook_dir, ignore_errors=True)
 
         if not delivered:
             return {

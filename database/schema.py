@@ -182,7 +182,15 @@ INDEXES = [
 # databases created before these were added need them backfilled via
 # ALTER TABLE, since `CREATE TABLE IF NOT EXISTS` only helps fresh databases.
 ADDED_COLUMNS_BY_TABLE = {
-    "notifications": {"email_sent": "INTEGER NOT NULL DEFAULT 0"},
+    "notifications": {
+        "email_sent": "INTEGER NOT NULL DEFAULT 0",
+        # Optional AI job-type classification, computed only for candidates
+        # NotificationValidator already classified VALID (never INVALID/
+        # REVIEW). NULL for every row that predates this column and for
+        # any row where classification wasn't attempted/failed safely.
+        "job_type": "TEXT",
+        "job_type_confidence": "REAL",
+    },
     "pdf_documents": {
         "http_status": "INTEGER",
         "extracted_text": "TEXT",

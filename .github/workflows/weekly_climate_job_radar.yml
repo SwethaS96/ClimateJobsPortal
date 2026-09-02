@@ -3,7 +3,13 @@ name: Weekly Climate Job Radar
 # GitHub Actions' `schedule.cron` is always evaluated in UTC — there is no
 # native per-workflow timezone setting for it. India (IST, UTC+5:30) has no
 # daylight-saving shift, so a fixed UTC offset is stable year-round.
-# Monday 08:00 IST == Monday 02:30 UTC.
+# 08:00 IST == 02:30 UTC.
+#
+# *** TEMPORARY DAILY SCHEDULE — 7-DAY OBSERVATION PERIOD ***
+# Normally "30 2 * * 1" (Monday only). Temporarily changed to run daily
+# instead so this window can be observed more closely. Restore the
+# permanent weekly schedule after the observation period by reverting to:
+#   - cron: "30 2 * * 1"
 on:
   schedule:
     - cron: "30 2 * * *"

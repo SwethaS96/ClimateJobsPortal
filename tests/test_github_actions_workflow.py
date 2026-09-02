@@ -25,29 +25,38 @@ def test_workflow_file_exists():
 
 
 def test_workflow_has_schedule_trigger():
+    """Final production state: the workflow runs automatically every
+    Monday (see test_schedule_is_weekly_not_daily for the exact cron),
+    with workflow_dispatch still available for manual runs."""
     workflow = _load_workflow()
-    # YAML parses the bare key `on` as boolean True unless quoted.
     triggers = workflow.get("on") or workflow.get(True)
     assert triggers is not None
     assert "schedule" in triggers
-    schedules = triggers["schedule"]
-    assert isinstance(schedules, list) and len(schedules) == 1
-    assert "cron" in schedules[0]
+    assert "workflow_dispatch" in triggers
 
 
-def test_schedule_is_weekly_not_daily():
+def test_schedule_runs_at_0800_ist():
+    """08:00 IST == 02:30 UTC, regardless of day-of-week cadence."""
     workflow = _load_workflow()
     triggers = workflow.get("on") or workflow.get(True)
-    cron = triggers["schedule"][0]["cron"]
-    fields = cron.split()
-    assert len(fields) == 5
-    minute, hour, day_of_month, month, day_of_week = fields
-    # TEMPORARY: the day-of-week check below is relaxed while the schedule
-    # is intentionally running daily ("30 2 * * *") for GitHub Actions
-    # testing. Restore `assert day_of_week != "*"` when the cron reverts
-    # to a pinned weekday (e.g. "30 2 * * 1" for weekly Monday runs).
-    assert day_of_month == "*"
-    assert month == "*"
+    schedule = triggers["schedule"]
+    assert len(schedule) == 1
+    cron = schedule[0]["cron"]
+    minute, hour, day_of_month, month, day_of_week = cron.split()
+    assert (minute, hour) == ("30", "2")
+
+
+def test_schedule_is_temporarily_daily_for_the_observation_period():
+    """TEMPORARY: intentionally daily ("30 2 * * *") for a 7-day
+    observation period, per explicit instruction. This must be reverted
+    to weekly ("30 2 * * 1", Monday only) after the observation window —
+    when that happens, restore this test's assertion to
+    `cron == "30 2 * * 1"` and `day_of_week != "*"` (its pre-daily form)."""
+    workflow = _load_workflow()
+    triggers = workflow.get("on") or workflow.get(True)
+    schedule = triggers["schedule"]
+    cron = schedule[0]["cron"]
+    assert cron == "30 2 * * *"
 
 
 def test_workflow_has_workflow_dispatch_with_dry_run_input():

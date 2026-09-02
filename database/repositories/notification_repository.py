@@ -25,8 +25,16 @@ def insert_notification(
     application_deadline: str | None = None,
     page_url: str | None = None,
     hash: str = None,
+    job_type: str | None = None,
+    job_type_confidence: float | None = None,
 ) -> int:
-    """Insert a new notification and return its id."""
+    """Insert a new notification and return its id.
+
+    `job_type`/`job_type_confidence` are optional and appended last for
+    positional-call compatibility with existing callers (e.g. the FastAPI
+    router in routers/). Only ever set for candidates already classified
+    VALID by NotificationValidator — see services/notification_service.py.
+    """
     conn = get_connection()
     try:
         cur = conn.cursor()
@@ -37,9 +45,9 @@ def insert_notification(
                 INSERT INTO notifications
                     (organization_id, website_id, title, notification_number, category,
                      notification_date, application_deadline, status, page_url, hash,
-                     first_seen, last_seen, created_at, updated_at)
+                     first_seen, last_seen, created_at, updated_at, job_type, job_type_confidence)
                 VALUES
-                    (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     organization_id,
@@ -56,6 +64,8 @@ def insert_notification(
                     ts,
                     ts,
                     ts,
+                    job_type,
+                    job_type_confidence,
                 ),
             )
         except sqlite3.IntegrityError as exc:

@@ -37,3 +37,4 @@ logs/
 !data/database/climate_jobs.db
 data/database/backups/
 data/validation_audit
+data/downloads/

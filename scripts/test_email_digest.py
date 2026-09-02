@@ -43,11 +43,15 @@ def run(service: EmailDigestService | None = None, out=sys.stdout) -> int:
     print(f"GROUPS: {len(digest.grouped)} organizations", file=out)
 
     if digest.included_count:
-        sample_html = service.render_digest_html(digest.grouped, "<dry-run>")
-        print(f"ESTIMATED EMAIL SIZE: {len(sample_html):,} bytes of HTML "
-              f"({digest.included_count} notification(s) in this digest)", file=out)
+        short_body = service.render_short_digest_html(digest.included_count, "<dry-run>")
+        print(
+            f"EMAIL BODY: {len(short_body):,} bytes of HTML "
+            f"({digest.included_count} notification(s) would go into the attached Excel workbook, "
+            "not the body itself)",
+            file=out,
+        )
     else:
-        print("ESTIMATED EMAIL SIZE: 0 bytes (no digest would be sent)", file=out)
+        print("EMAIL BODY: n/a (no digest would be sent)", file=out)
 
     if digest.excluded_count:
         print(
